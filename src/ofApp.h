@@ -2,6 +2,9 @@
 
 #include "ofMain.h"
 
+#define TOTALB      4 // numero total de botones
+#define TOTALT      6 // numero total de treompetas
+
 class ofApp : public ofBaseApp{
 
 public:
@@ -20,5 +23,17 @@ public:
   void windowResized(int w, int h);
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
+
+  // APP
+  bool brunMode = false;
+  ofColor colorF; // fondo
+  ofColor color1;
+  ofColor color2;
+
+  // BOTONES PULSADORES
+  bool botones[TOTALB];
+
+  // TROMPETAS SOPLADORAS
+  float trompetas[TOTALT];
 
 };
