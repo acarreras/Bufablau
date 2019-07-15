@@ -33,6 +33,28 @@ void ofApp::setup(){
     trompetas[i] = 0.0;
   }
 
+  // AUDIO IN TEST
+  if(!brunMode){
+    bufferSize = 256;
+    ofSoundStreamSettings settings;
+    auto devices = soundStream.getMatchingDevices("default");
+    if(!devices.empty()){
+      settings.setInDevice(devices[0]);
+    }
+
+    settings.setInListener(this);
+    settings.sampleRate = 44100;
+    settings.numOutputChannels = 0;
+    settings.numInputChannels = 2;
+    settings.bufferSize = bufferSize;
+    soundStream.setup(settings);
+    soundStream.start();
+
+    smoothedVol = 0.0;
+    scaledVol = 0.0;
+
+    threshold = 0.01;
+  }
 }
 
 //--------------------------------------------------------------
@@ -45,7 +67,18 @@ void ofApp::update(){
     colorF = color2;
   }
 
+  // AUDIO IN TEST
+  //lets scale the vol up
+  if(smoothedVol < threshold){
+    volHistory.clear();
+  }
+  else{
+    scaledVol = ofMap(smoothedVol, 0.0, 1.0, 0.0, 200.0, true);
+    scaledThreshold = ofMap(threshold, 0.0, 1.0, 0.0, 200.0, true);
 
+    //lets record the volume into an array
+    volHistory.push_back(scaledVol);
+  }
 }
 
 //--------------------------------------------------------------
@@ -58,22 +91,38 @@ void ofApp::draw(){
   // TROMPETAS
 
   // BOTONES
+
+  // AUDIO IN
+  ofBeginShape();
+  ofSetColor(255);
+  for (unsigned int i=0; i<volHistory.size(); i++){
+    if(i == 0) ofVertex(i, ofGetHeight());
+
+    ofVertex(i, ofGetHeight() - volHistory[i]);
+
+    if(i == volHistory.size()-1) ofVertex(i, ofGetHeight());
+  }
+  ofEndShape(false);
+  ofSetColor(255,100,100);
+  ofDrawLine(0,ofGetHeight()-scaledThreshold, ofGetWidth(),ofGetHeight()-scaledThreshold);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-  // TEST BOTONES
-  if(key == '0'){
-    botones[0] = !botones[0];
-  }
-  else if(key == '1'){
-    botones[1] = !botones[1];
-  }
-  else if(key == '2'){
-    botones[2] = !botones[2];
-  }
-  else if(key == '3'){
-    botones[3] = !botones[3];
+  if(!brunMode){
+    // TEST BOTONES
+    if(key == '0'){
+      botones[0] = !botones[0];
+    }
+    else if(key == '1'){
+      botones[1] = !botones[1];
+    }
+    else if(key == '2'){
+      botones[2] = !botones[2];
+    }
+    else if(key == '3'){
+      botones[3] = !botones[3];
+    }
   }
 
 }
@@ -126,4 +175,30 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
+}
+
+//--------------------------------------------------------------
+void ofApp::audioIn(ofSoundBuffer & input){
+
+  float curVol = 0.0;
+  int numCounted = 0;
+
+  //lets go through each sample and calculate the root mean square which is a rough way to calculate volume
+  for (size_t i = 0; i < input.getNumFrames(); i++){
+    float left = input[i*2]*0.5;
+    float right = input[i*2+1]*0.5;
+
+    curVol += left * left;
+    curVol += right * right;
+    numCounted+=2;
+  }
+
+  //this is how we get the mean of rms :)
+  curVol /= (float)numCounted;
+
+  // this is how we get the root of rms :)
+  curVol = sqrt(curVol);
+
+  smoothedVol *= 0.93;
+  smoothedVol += 0.07 * curVol;
 }
