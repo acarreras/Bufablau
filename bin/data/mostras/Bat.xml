@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Bat>
+	<Valor>1</Valor>
+	<Oscilador>
+		<Time_Mul>1.74247</Time_Mul>
+		<Y_Offset>-132.535</Y_Offset>
+		<Radius>50, 254.661</Radius>
+		<Freq>2.51106, 1.3657</Freq>
+	</Oscilador>
+	<Tint>0.188314, 0.177287, 0.335616, 1</Tint>
+</Bat>

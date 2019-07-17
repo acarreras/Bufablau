@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<Visual>
+	<FPS>59.93</FPS>
+	<Blob>
+		<Valor>1</Valor>
+		<Radius>53.6224</Radius>
+		<Radius_Mul>3</Radius_Mul>
+		<Noise_Max>1.22449</Noise_Max>
+		<Time_Mul>1.73768</Time_Mul>
+		<Color>0.916701, 0.29076, 0.339446, 1</Color>
+	</Blob>
+	<Stick>
+		<Valor>1</Valor>
+		<Dance>90.4068</Dance>
+		<Tint>1, 0.438229, 0.518101, 1</Tint>
+		<Oscilador>
+			<Time_Mul>1.51024</Time_Mul>
+			<Y_Offset>68.0643</Y_Offset>
+			<Radius>116.947, 94.6354</Radius>
+			<Freq>1.71098, 1.60473</Freq>
+		</Oscilador>
+	</Stick>
+	<Bat>
+		<Valor>1</Valor>
+		<Dance>170.495</Dance>
+		<Tint>0.217711, 0.14038, 0.340278, 1</Tint>
+		<Oscilador>
+			<Time_Mul>-1.40989</Time_Mul>
+			<Y_Offset>-181.344</Y_Offset>
+			<Radius>232.674, 170.2</Radius>
+			<Freq>0.633553, 2.82181</Freq>
+		</Oscilador>
+	</Bat>
+	<Pride>
+		<Valor>1</Valor>
+		<Dance>170.495</Dance>
+		<Tint>0.270833, 0.00695106, 0.264397, 1</Tint>
+		<Oscilador>
+			<Time_Mul>-1.41883</Time_Mul>
+			<Y_Offset>62.9956</Y_Offset>
+			<Radius>245.19, 111.317</Radius>
+			<Freq>4.74071, 1.9766</Freq>
+		</Oscilador>
+	</Pride>
+	<Doble>
+		<Valor>1</Valor>
+		<Dance>179.423</Dance>
+		<Tint>0.290442, 0.524166, 1, 1</Tint>
+		<Oscilador>
+			<Time_Mul>-2.55036</Time_Mul>
+			<Y_Offset>83.9244</Y_Offset>
+			<Radius>188.486, 65.5599</Radius>
+			<Freq>1.20547, 2.83094</Freq>
+		</Oscilador>
+	</Doble>
+	<Dark>
+		<Valor>1</Valor>
+		<Dance>163.265</Dance>
+		<Tint>0, 0, 0.271137, 1</Tint>
+		<Oscilador>
+			<Time_Mul>-0.716815</Time_Mul>
+			<Y_Offset>0</Y_Offset>
+			<Radius>305.59, 193.802</Radius>
+			<Freq>3.35803, 5.229</Freq>
+		</Oscilador>
+	</Dark>
+	<Bot>
+		<Valor>0</Valor>
+		<Dance>191.327</Dance>
+		<Tint>0.218234, 0.256944, 0.0617082, 1</Tint>
+		<Oscilador>
+			<Time_Mul>1.56601</Time_Mul>
+			<Y_Offset>31.6025</Y_Offset>
+			<Radius>233.11, 233.11</Radius>
+			<Freq>2.45637, 3.99697</Freq>
+		</Oscilador>
+	</Bot>
+	<Stick_GUI>0</Stick_GUI>
+	<Bat_GUI>0</Bat_GUI>
+	<Pride_GUI>0</Pride_GUI>
+	<Doble_GUI>0</Doble_GUI>
+	<Dark_GUI>0</Dark_GUI>
+	<Bot_GUI>0</Bot_GUI>
+</Visual>

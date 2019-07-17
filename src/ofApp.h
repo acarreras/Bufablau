@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Visual.hpp"
+
 
 #define TOTALB      4 // numero total de botones
 #define TOTALT      6 // numero total de treompetas
@@ -46,6 +48,8 @@ public:
   void audioIn(ofSoundBuffer & input);
   float threshold;
   float scaledThreshold;
+  //  VISUAL
+  Visual  visual;
 
 
 };

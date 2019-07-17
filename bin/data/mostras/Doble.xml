@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Doble>
+	<Valor>1</Valor>
+	<Oscilador>
+		<Time_Mul>1.32653</Time_Mul>
+		<Y_Offset>61.5306</Y_Offset>
+		<Radius>135.918, 57.2012</Radius>
+		<Freq>2.399, 0.941275</Freq>
+	</Oscilador>
+	<Tint>0.525386, 0.453083, 1, 1</Tint>
+</Doble>

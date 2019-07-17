@@ -55,6 +55,14 @@ void ofApp::setup(){
 
     threshold = 0.01;
   }
+  
+  
+  //  VISUAL
+  
+  visual.setup();
+  ofSetCircleResolution(42);
+  
+  
 }
 
 //--------------------------------------------------------------
@@ -79,6 +87,10 @@ void ofApp::update(){
     //lets record the volume into an array
     volHistory.push_back(scaledVol);
   }
+  
+  visual.update();
+
+  
 }
 
 //--------------------------------------------------------------
@@ -86,13 +98,24 @@ void ofApp::draw(){
   // APP GENERAL
   ofBackground(colorF);
   ofSetColor(255);
-  ofSetWindowTitle("BUFABLAU running at " + ofToString((int)ofGetFrameRate()) + " frames per second");
+ // ofSetWindowTitle("BUFABLAU running at " + ofToString((int)ofGetFrameRate()) + " frames per second");
 
   // TROMPETAS
 
   // BOTONES
 
   // AUDIO IN
+  
+  //  VISUAL
+  
+  
+  ofBackground(255);
+  
+  visual.draw();
+  
+  //
+  
+  
   ofBeginShape();
   ofSetColor(255);
   for (unsigned int i=0; i<volHistory.size(); i++){
@@ -113,15 +136,38 @@ void ofApp::keyPressed(int key){
     // TEST BOTONES
     if(key == '0'){
       botones[0] = !botones[0];
+      visual.buttonBang(0);
+
     }
     else if(key == '1'){
       botones[1] = !botones[1];
+      
+      visual.buttonBang(1);
+
+      if(botones[1])
+      {
+        visual.buttonBang(1);
+      }else{
+        visual.buttonReset(1);
+      }
+      
+      
     }
     else if(key == '2'){
       botones[2] = !botones[2];
+      if(botones[2])
+      {
+        visual.buttonBang(2);
+      }else{
+        visual.buttonReset(2);
+      }
     }
     else if(key == '3'){
       botones[3] = !botones[3];
+      if(botones[3])
+      {
+        visual.buttonBang(3);
+      }
     }
   }
 
