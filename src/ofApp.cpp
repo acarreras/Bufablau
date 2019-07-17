@@ -58,6 +58,13 @@ void ofApp::setup(){
   
   
   //  VISUAL
+  //  posibles colores de fondo
+  visual.addBackColor(0xBCC4DB);
+  visual.addBackColor(0xC0A9B0);
+  visual.addBackColor(0x7880B5);
+  visual.addBackColor(0x6987C9);
+  visual.addBackColor(0x6BBAEC);
+  
   
   visual.setup();
   ofSetCircleResolution(42);
@@ -169,6 +176,9 @@ void ofApp::keyPressed(int key){
         visual.buttonBang(3);
       }
     }
+  }else if(key == 'g')
+  {
+    visual.drawGui = !visual.drawGui;
   }
 
 }

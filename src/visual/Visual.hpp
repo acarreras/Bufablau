@@ -35,9 +35,10 @@ public:
     
     void    buttonBang(int _index);
     void    buttonReset(int _index);
+    void    addBackColor(int _hex);
+    bool  drawGui;
 
 private:
-    void    addBackColor(int _hex);
     ofxPanel gui;
     ofParameter<string> fps;
     bool     loaded;

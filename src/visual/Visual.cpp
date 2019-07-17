@@ -22,7 +22,7 @@ void    Visual::setup()
 {
     gui.setup("Visual","visual.xml");
     gui.add(fps.set("FPS","FPS"));
-    
+    drawGui = true;
     
     float stepW = ofGetWidth()/7.0f;
     
@@ -72,11 +72,7 @@ void    Visual::setup()
     colorIndex = 0;
     colorNextIndex = 0;
     
-    addBackColor(0xBCC4DB);
-    addBackColor(0xC0A9B0);
-    addBackColor(0x7880B5);
-    addBackColor(0x6987C9);
-    addBackColor(0x6BBAEC);
+  
     
     backColor = backgroundColors.at(colorIndex);
     
@@ -215,7 +211,8 @@ void    Visual::draw()
 
     fbo.draw(0,0);
     shader.end();
-    
+  
+  if(drawGui){
     gui.draw();
     
     
@@ -226,6 +223,7 @@ void    Visual::draw()
             objects.at(i)->drawGui();
         }
     }
+  }
     
 }
 
