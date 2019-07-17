@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Pride>
-	<Valor>1</Valor>
+	<Valor>0.83</Valor>
 	<Oscilador>
 		<Time_Mul>-0.867347</Time_Mul>
 		<Y_Offset>0</Y_Offset>
@@ -8,4 +8,5 @@
 		<Freq>6.14744, 2.71137</Freq>
 	</Oscilador>
 	<Tint>1, 1, 1, 1</Tint>
+	<P_Threshold>0.72</P_Threshold>
 </Pride>

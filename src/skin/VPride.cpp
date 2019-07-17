@@ -61,7 +61,7 @@ void    VPride::updateStick()
         }else{
             
             float len =glm::length(bodySticks.at(bodySticks.size()-1)->offset);
-            if(val > particlesThreshold){
+            if(val > particlesThreshold && ofRandom(100) > 50){
                 p->reborn(bodySticks.at(bodySticks.size()-1)->a->x, bodySticks.at(bodySticks.size()-1)->a->y, ofRandom(-.02,.02), ofRandom(-.1,-.3), ofRandom(50,200));
             }
             
