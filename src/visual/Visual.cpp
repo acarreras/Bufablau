@@ -22,6 +22,9 @@ void    Visual::setup()
 {
     gui.setup("Visual","visual.xml");
     gui.add(fps.set("FPS","FPS"));
+  
+    simulation.addListener(this, &Visual::onSimulation);
+    gui.add(simulation.set("Simulate",false));
     drawGui = true;
     
     float stepW = ofGetWidth()/7.0f;
@@ -90,6 +93,21 @@ void    Visual::setup()
     
 
 }
+
+void    Visual::onSimulation(bool &_e)
+{
+  for(int i=0;i<objects.size();i++)
+    objects.at(i)->setSimulation(_e);
+}
+
+
+void    Visual::setVal(int _index,float _val)
+{
+  if(!simulation){
+    objects.at(_index)->setVal(_val);
+  }
+}
+
 
 void    Visual::addObject(VSObject *_newObject)
 {

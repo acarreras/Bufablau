@@ -32,15 +32,17 @@ public:
     void    update();
     void    draw();
     
-    
+    void    setVal(int _index,float _val);  
     void    buttonBang(int _index);
     void    buttonReset(int _index);
     void    addBackColor(int _hex);
+    void    onSimulation(bool &_e);
     bool  drawGui;
 
 private:
     ofxPanel gui;
     ofParameter<string> fps;
+    ofParameter<bool>   simulation;
     bool     loaded;
     vector<VSObject*>   objects;
     //  objects

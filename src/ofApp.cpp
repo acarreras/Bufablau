@@ -94,6 +94,11 @@ void ofApp::update(){
     //lets record the volume into an array
     volHistory.push_back(scaledVol);
   }
+  // TROMPETAS
+  //  enviar data , el toggle de simulacion tiene que estar apagado
+  for(int i=0; i<TOTALT; i++){
+    visual.setVal(i,trompetas[i]);
+  }
   
   visual.update();
 

@@ -107,8 +107,8 @@ void    VStick::customUpdate()
     
     
     float time = ofGetElapsedTimef()*oscTimeMul;
-    target.x = base.x+cos(time*oscFreq.get().x)*oscRad.get().x*ofLerp(.1,1.0,simVal);
-    target.y = ofGetHeight()*.5+oscYOffset+sin(time*oscFreq.get().y)*oscRad.get().y*ofLerp(.1,1.0,simVal);
+    target.x = base.x+cos(time*oscFreq.get().x)*oscRad.get().x*ofLerp(.1,1.0,val);
+    target.y = ofGetHeight()*.5+oscYOffset+sin(time*oscFreq.get().y)*oscRad.get().y*ofLerp(.1,1.0,val);
     
     follow(target.x,target.y);
     
