@@ -27,6 +27,7 @@ public:
     void    update();
     void    draw();
     void    drawGui();
+    void    setSimulation(bool _val);
 
     virtual void    customSetup(){};
     virtual void    customUpdate(){};
@@ -43,6 +44,7 @@ protected:
     float   x,y;
     ofParameter<float>  simVal;
     ofxPanel    gui;
+  bool        simulated;
     
 };
 

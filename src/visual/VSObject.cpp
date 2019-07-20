@@ -12,6 +12,7 @@ VSObject::VSObject()
     val = 0.0f;
     x = 0.0f;
     y = 0.0f;
+    simulated = false;
 }
 
 VSObject::~VSObject()
@@ -38,10 +39,18 @@ void    VSObject::setup(string _name)
     customSetup();
 }
 
+void    VSObject::setSimulation(bool _val)
+{
+  simulated = _val;
+}
+
+
 void    VSObject::setVal(float _val)
 {
+  
     val = _val;
-    customSetVal(val);
+
+    //customSetVal(val);
 }
 
 void    VSObject::born()
@@ -64,6 +73,10 @@ void    VSObject::update()
     
     
     ofxINObject::update();
+    if(simulated)
+    {
+      setVal(simVal);
+    }
     customUpdate();
 }
 
@@ -80,5 +93,7 @@ void    VSObject::drawGui()
 
 void    VSObject::setSimVal(float &_val)
 {
+  if(simulated){
     setVal(_val);
+  }
 }
