@@ -48,6 +48,7 @@ public:
   void audioIn(ofSoundBuffer & input);
   float threshold;
   float scaledThreshold;
+
   //  VISUAL
   Visual  visual;
 

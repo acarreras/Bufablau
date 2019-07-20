@@ -5,7 +5,6 @@ void ofApp::setup(){
   // APP GENERAL
   brunMode = false; // FALSE para testear TRUE for game
   ofSetVerticalSync(true);
-  ofSetCircleResolution(300);
   ofTrueTypeFont::setGlobalDpi(72);
   if(brunMode == true){
     ofSetFullscreen(true);
@@ -175,9 +174,18 @@ void ofApp::keyPressed(int key){
       {
         visual.buttonBang(3);
       }
-    }else if(key == 'g')
+    }
+    else if(key == 'g')
     {
       visual.drawGui = !visual.drawGui;
+    }
+    else if(key == 'c')
+    {
+      ofShowCursor();
+    }
+    else if(key == 'u')
+    {
+      ofHideCursor();
     }
   }
 

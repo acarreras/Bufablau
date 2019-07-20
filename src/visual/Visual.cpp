@@ -22,7 +22,7 @@ void    Visual::setup()
 {
     gui.setup("Visual","visual.xml");
     gui.add(fps.set("FPS","FPS"));
-    drawGui = true;
+    drawGui = false;
     
     float stepW = ofGetWidth()/7.0f;
     
