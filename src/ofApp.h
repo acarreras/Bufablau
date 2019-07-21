@@ -28,26 +28,12 @@ public:
 
   // APP
   bool brunMode = false;
-  ofColor colorF; // fondo
-  ofColor color1;
-  ofColor color2;
 
   // BOTONES PULSADORES
   bool botones[TOTALB];
 
   // TROMPETAS SOPLADORAS
   float trompetas[TOTALT];
-
-  // AUDIO IN TEST
-  int bufferSize;
-  ofSoundStream soundStream;
-  vector <float> volHistory;
-  float smoothedVol;
-  float scaledVol;
-
-  void audioIn(ofSoundBuffer & input);
-  float threshold;
-  float scaledThreshold;
 
   //  VISUAL
   Visual  visual;
