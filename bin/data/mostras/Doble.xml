@@ -8,4 +8,5 @@
 		<Freq>2.399, 0.941275</Freq>
 	</Oscilador>
 	<Tint>0.525386, 0.453083, 1, 1</Tint>
+	<P_Threshold>0.5</P_Threshold>
 </Doble>

@@ -97,3 +97,13 @@ void    VSObject::setSimVal(float &_val)
     setVal(_val);
   }
 }
+
+void  VSObject::loadGui()
+{
+  gui.loadFromFile("mostras/"+name+".xml");
+}
+
+void  VSObject::saveGui()
+{
+  gui.saveToFile("mostras/"+name+".xml");
+}

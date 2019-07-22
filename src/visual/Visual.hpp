@@ -37,6 +37,8 @@ public:
     void    buttonReset(int _index);
     void    addBackColor(int _hex);
     void    onSimulation(bool &_e);
+    void    onGuiLoad();  
+    void    onGuiSave();
     bool  drawGui;
 
 private:

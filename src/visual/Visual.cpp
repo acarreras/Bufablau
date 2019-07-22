@@ -21,6 +21,9 @@ Visual::~Visual()
 void    Visual::setup()
 {
     gui.setup("Visual","visual.xml");
+    ofAddListener(gui.savePressedE, this, &Visual::onGuiSave);
+    ofAddListener(gui.loadPressedE,this,&Visual::onGuiLoad);
+  
     gui.add(fps.set("FPS","FPS"));
   
     simulation.addListener(this, &Visual::onSimulation);
@@ -94,6 +97,18 @@ void    Visual::setup()
 
 }
 
+void    Visual::onGuiSave()
+{
+ for(int i=0;i<objects.size();i++)
+   objects.at(i)->saveGui();
+}
+
+void    Visual::onGuiLoad()
+{
+  for(int i=0;i<objects.size();i++)
+    objects.at(i)->loadGui();
+}
+
 void    Visual::onSimulation(bool &_e)
 {
   for(int i=0;i<objects.size();i++)
@@ -104,7 +119,9 @@ void    Visual::onSimulation(bool &_e)
 void    Visual::setVal(int _index,float _val)
 {
   if(!simulation){
-    objects.at(_index)->setVal(_val);
+    if(_index < objects.size()){
+      objects.at(_index)->setVal(_val);
+    }
   }
 }
 

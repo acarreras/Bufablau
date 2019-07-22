@@ -28,6 +28,8 @@ public:
     void    draw();
     void    drawGui();
     void    setSimulation(bool _val);
+    void    saveGui();
+    void  loadGui();
 
     virtual void    customSetup(){};
     virtual void    customUpdate(){};
