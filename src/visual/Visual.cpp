@@ -24,7 +24,7 @@ void    Visual::setup()
     ofAddListener(gui.savePressedE, this, &Visual::onGuiSave);
     ofAddListener(gui.loadPressedE,this,&Visual::onGuiLoad);
   
-    gui.add(fps.set("FPS","FPS"));
+    //gui.add(fps.set("FPS","FPS"));
   
     simulation.addListener(this, &Visual::onSimulation);
     gui.add(simulation.set("Simulate",false));
@@ -136,7 +136,7 @@ void    Visual::addObject(VSObject *_newObject)
 void    Visual::update()
 {
     
-    shader.load("shader/shader.vert","shader/shader.frag");
+    //shader.load("shader/shader.vert","shader/shader.frag");
 
     ofxINObject::update();
     
@@ -157,7 +157,7 @@ void    Visual::update()
     
     
     
-    fps = ofToString(ofGetFrameRate(),2);
+    //fps = ofToString(ofGetFrameRate(),2);
     
     for(auto object : objects)
     {

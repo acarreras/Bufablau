@@ -6,6 +6,7 @@
 
 #define TOTALB      4 // numero total de botones
 #define TOTALT      6 // numero total de treompetas
+#define TOTAL_FULLES    20
 
 class ofApp : public ofBaseApp{
 
@@ -28,12 +29,19 @@ public:
 
   // APP
   bool brunMode = false;
+  float appW;
+  float appH;
 
   // BOTONES PULSADORES
   bool botones[TOTALB];
 
   // TROMPETAS SOPLADORAS
   float trompetas[TOTALT];
+
+  // FULLES
+  vector<ofImage> fulles;
+  float t;
+  float ampli;
 
   //  VISUAL
   Visual  visual;

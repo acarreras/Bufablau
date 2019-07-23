@@ -43,7 +43,7 @@ public:
 
 private:
     ofxPanel gui;
-    ofParameter<string> fps;
+    //ofParameter<string> fps;
     ofParameter<bool>   simulation;
     bool     loaded;
     vector<VSObject*>   objects;
