@@ -1,4 +1,6 @@
 #include "ofApp.h"
+#include "ofxMeshWarpIO.h"
+using namespace std;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -6,7 +8,7 @@ void ofApp::setup(){
   appW = ofGetWidth();
   appH = ofGetHeight();
 
-  brunMode = false; // FALSE para testear TRUE for game
+  brunMode = true; // FALSE para testear TRUE for game
   ofSetVerticalSync(true);
   ofTrueTypeFont::setGlobalDpi(72);
   if(brunMode == true){
@@ -50,11 +52,34 @@ void ofApp::setup(){
     fulles.push_back(f);
   }
   ampli = 8.5;
-  
+
+  // WARP
+  tex_.allocate(appW,appH, GL_RGB);
+  mesh_ = make_shared<ofxMeshWarp>();
+  mesh_->setup(ofRectangle(0, appH, appW,-appH),20,20); // apaño en negativo porque las texturas y los mesh tienen los ejes y girados
+                                                        // y la forma correct usando ofDisableArbTex(); no funciona
+  mesh_->setUVRect(ofRectangle(0, 0, appW,appH));
+  controller_.add(mesh_);
+  controller_.disable();
+
+  // COMENTADO PARA DESARROLLO
+  // para no deformar con el load de ajuste de warp
+  /*
+  ofxMeshWarpLoad loader; // load config
+  vector<shared_ptr<ofxMeshWarp>> result = loader.load("bufablau.txt");
+  if(!result.empty()) {
+      controller_.clear();
+      mesh_ = result[0];
+      controller_.add(mesh_);
+  }
+  */
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+  // WARP
+  mesh_->update();
+
   // FULLES
   t = ofGetElapsedTimef();
 
@@ -68,15 +93,12 @@ void ofApp::update(){
   }
   
   visual.update();
-
   
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
   // APP GENERAL
-
-  // TROMPETAS
 
   // BOTONES
 
@@ -85,6 +107,161 @@ void ofApp::draw(){
   visual.draw();
 
   // FULLES
+  drawFulles();
+
+  // WARP
+  tex_.loadScreenData(0,0,appW, appH);
+  ofBackground(0);
+
+  tex_.bind();
+  mesh_->drawMesh();
+  // controller_.drawFace();
+  tex_.unbind();
+  if(bcontrolerDraw) controller_.draw();
+
+  // DEBUG
+  if(!brunMode){
+    ofSetColor(0);
+    ofDrawBitmapString(ofToString((int)ofGetFrameRate()) + " FPS", 20,20);
+  }
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key){
+  if(!brunMode){
+    // TEST BOTONES
+    if((key == '0')&&(botones[0]==false)){
+      botones[0] = true;
+      visual.buttonBang(0);
+    }
+    else if((key == '1')&&(botones[1]==false)){
+      botones[1] = true;
+      visual.buttonBang(1);
+    }
+    else if((key == '2')&&(botones[2]==false)){
+      botones[2] = true;
+      visual.buttonBang(2);
+    }
+    else if((key == '3')&&(botones[3]==false)){
+      botones[3] = true;
+      visual.buttonBang(3);
+    }
+  } // end if brunMode
+
+  if((key == 'g')||(key == 'G')){
+    visual.drawGui = !visual.drawGui;
+  }
+  else if((key == 'c')||(key == 'C')){
+    ofShowCursor();
+  }
+  else if((key == 'u')||(key == 'U')){
+    ofHideCursor();
+  }
+  else if((key == 'f')||(key == 'F')){
+    ofToggleFullscreen();
+  }
+  else if((key == 'e')||(key == 'E')){
+    controller_.enable();
+  }
+  else if((key == 'd')||(key == 'D')){
+    controller_.disable();
+  }
+  else if((key == 'r')||(key == 'R')){
+      mesh_->reset(ofRectangle(0, appH, appW, -appH));
+      controller_.clear();
+      controller_.add(mesh_);
+  }
+  else if(key == ' '){
+    bcontrolerDraw = !bcontrolerDraw;
+  }
+  else if((key == 's')||(key == 'S')){
+    ofxMeshWarpSave saver;
+    saver.addMesh(mesh_);
+    saver.save("bufablau.txt");
+  }
+  else if((key == 'l')||(key == 'L')){
+    ofxMeshWarpLoad loader;
+    vector<shared_ptr<ofxMeshWarp>> result = loader.load("bufablau.txt");
+    if(!result.empty()) {
+        controller_.clear();
+        mesh_ = result[0];
+        controller_.add(mesh_);
+    }
+  }
+}
+
+//--------------------------------------------------------------
+void ofApp::keyReleased(int key){
+  if(!brunMode){
+    // TEST BOTONES
+    if(key == '0'){
+      botones[0] = false;
+      visual.buttonReset(0);
+    }
+    else if(key == '1'){
+      botones[1] = false;
+      visual.buttonReset(1);
+    }
+    else if(key == '2'){
+      botones[2] = false;
+      visual.buttonReset(2);
+    }
+    else if(key == '3'){
+      botones[3] = false;
+      visual.buttonReset(3);
+    }
+  } // end if brunMode
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y ){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseDragged(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mousePressed(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseEntered(int x, int y){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseExited(int x, int y){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::windowResized(int w, int h){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::gotMessage(ofMessage msg){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::dragEvent(ofDragInfo dragInfo){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::drawFulles(){
+  // diseño para 1920 x 1080
+
   // ramillete dalt esquerra
   ofPushMatrix();
   ofTranslate(205,0);
@@ -156,7 +333,7 @@ void ofApp::draw(){
   ofPopMatrix();
 
   ofPushMatrix();
-  ofTranslate(appW,469+65);
+  ofTranslate(appW,451+65);
   ofRotateDeg(180+ampli*ofNoise(t,12));
   fulles.at(11).draw(0,-65);
   ofPopMatrix();
@@ -164,19 +341,19 @@ void ofApp::draw(){
 
   // ramillete baix dreta
   ofPushMatrix();
-  ofTranslate(1473+8,appH);
+  ofTranslate(1373+8,appH);
   ofRotateDeg(ampli*ofNoise(t,13));
   fulles.at(12).draw(-8,-112);
   ofPopMatrix();
 
   ofPushMatrix();
-  ofTranslate(1390+68,appH);
+  ofTranslate(1290+68,appH);
   ofRotateDeg(ampli*ofNoise(t,14));
   fulles.at(13).draw(-68,-298);
   ofPopMatrix();
 
   ofPushMatrix();
-  ofTranslate(1325+96,appH);
+  ofTranslate(1225+96,appH);
   ofRotateDeg(ampli*ofNoise(t,15));
   fulles.at(14).draw(-96,-172);
   ofPopMatrix();
@@ -212,114 +389,4 @@ void ofApp::draw(){
   ofRotateDeg(ampli*ofNoise(t,20));
   fulles.at(19).draw(0,-47);
   ofPopMatrix();
-
-  // DEBUG
-  ofSetColor(0);
-  ofDrawBitmapString(ofToString((int)ofGetFrameRate()) + " FPS", 20,20);
-  
-}
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-  if(!brunMode){
-    // TEST BOTONES
-    if(key == '0'){
-      botones[0] = !botones[0];
-      visual.buttonBang(0);
-
-    }
-    else if(key == '1'){
-      botones[1] = !botones[1];
-      
-      visual.buttonBang(1);
-
-      if(botones[1])
-      {
-        visual.buttonBang(1);
-      }else{
-        visual.buttonReset(1);
-      }
-      
-      
-    }
-    else if(key == '2'){
-      botones[2] = !botones[2];
-      if(botones[2])
-      {
-        visual.buttonBang(2);
-      }else{
-        visual.buttonReset(2);
-      }
-    }
-    else if(key == '3'){
-      botones[3] = !botones[3];
-      if(botones[3])
-      {
-        visual.buttonBang(3);
-      }
-    }
-    else if(key == 'g')
-    {
-      visual.drawGui = !visual.drawGui;
-    }
-    else if(key == 'c')
-    {
-      ofShowCursor();
-    }
-    else if(key == 'u')
-    {
-      ofHideCursor();
-    }
-  }
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
-
 }

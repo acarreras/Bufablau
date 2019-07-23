@@ -1,6 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
+// ofxMeshWarp: https://github.com/nariakiiwatani/ofxMeshWarp
+#include "ofxMeshWarp.h"
+#include "ofxMeshWarpManagedController.h"
 #include "Visual.hpp"
 
 
@@ -32,6 +35,12 @@ public:
   float appW;
   float appH;
 
+  // WARP
+  bool bcontrolerDraw = false;
+  std::shared_ptr<ofxMeshWarp> mesh_;
+  ofxMeshWarpController controller_;
+  ofTexture tex_;
+
   // BOTONES PULSADORES
   bool botones[TOTALB];
 
@@ -42,6 +51,7 @@ public:
   vector<ofImage> fulles;
   float t;
   float ampli;
+  void drawFulles();
 
   //  VISUAL
   Visual  visual;
