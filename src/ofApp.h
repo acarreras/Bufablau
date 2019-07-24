@@ -56,5 +56,21 @@ public:
   //  VISUAL
   Visual  visual;
 
+    
+  // SERIAL - ARDUINO
+
+    ofArduino    ard;
+    bool        bSetupArduino;            // flag variable for setting up arduino once
+    
+private:
+    
+    void setupArduino(const int & version);
+    void digitalPinChanged(const int & pinNum);
+    void analogPinChanged(const int & pinNum);
+    void updateArduino();
+    
+    string buttonState;
+    string potValue;
+  
 
 };

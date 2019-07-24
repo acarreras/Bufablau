@@ -73,6 +73,19 @@ void ofApp::setup(){
       controller_.add(mesh_);
   }
   */
+    
+    //ARDUINO
+    ofSetVerticalSync(true);
+    ofSetFrameRate(60);
+
+    
+    buttonState = "digital pin:";
+    potValue = "analog pin:";
+
+    ard.connect("/dev/cu.usbmodem162", 57600);
+
+    ofAddListener(ard.EInitialized, this, &ofApp::setupArduino);
+    bSetupArduino    = false;
 }
 
 //--------------------------------------------------------------
@@ -93,8 +106,94 @@ void ofApp::update(){
   }
   
   visual.update();
+    
+// ARDUINO
+   updateArduino();
   
 }
+
+//------------ arduino firmata --------------
+
+void ofApp::setupArduino(const int & version) {
+    
+    // remove listener because we don't need it anymore
+    ofRemoveListener(ard.EInitialized, this, &ofApp::setupArduino);
+    
+    // it is now safe to send commands to the Arduino
+    bSetupArduino = true;
+    
+    // print firmware name and version to the console
+    ofLogNotice() << ard.getFirmwareName();
+    ofLogNotice() << "firmata v" << ard.getMajorFirmwareVersion() << "." << ard.getMinorFirmwareVersion();
+    
+
+    // set pins D2 and A5 to digital input
+    ard.sendDigitalPinMode(17, ARD_INPUT);
+    ard.sendDigitalPinMode(15, ARD_INPUT);
+    ard.sendDigitalPinMode(19, ARD_INPUT);  // pin 21 if using StandardFirmata from Arduino 0022 or older
+    
+    // set pin A0 to analog input
+    ard.sendAnalogPinReporting(0, ARD_ANALOG);
+    
+    
+    // Listen for changes on the digital and analog pins
+    ofAddListener(ard.EDigitalPinChanged, this, &ofApp::digitalPinChanged);
+    ofAddListener(ard.EAnalogPinChanged, this, &ofApp::analogPinChanged);
+}
+
+//--------------------------------------------------------------
+void ofApp::updateArduino(){
+
+    ard.update();
+
+    
+}
+
+//--------------------------------------------------------------
+void ofApp::digitalPinChanged(const int & pinNum) {
+    //botones cambian fondo, FALTA UNO
+    buttonState = "digital pin: " + ofToString(pinNum) + " = " + ofToString(ard.getDigital(pinNum));
+    if(pinNum==15){
+        
+        if(ard.getDigital(pinNum)==1){
+            botones[0] = true;
+            visual.buttonBang(0);
+        }else{
+            botones[0] = false;
+            visual.buttonReset(0);
+        }
+        
+        
+       
+    }else if(pinNum==17){
+        if(ard.getDigital(pinNum)==1){
+            botones[1] = true;
+            visual.buttonBang(1);
+        }else{
+            botones[1] = false;
+            visual.buttonReset(1);
+        }
+    }else if(pinNum==19){
+        if(ard.getDigital(pinNum)==1){
+            botones[2] = true;
+            visual.buttonBang(2);
+        }else{
+            botones[2] = false;
+            visual.buttonReset(2);
+        }
+        
+    }
+}
+
+// analog pin event handler, called whenever an analog pin value has changed
+
+//--------------------------------------------------------------
+void ofApp::analogPinChanged(const int & pinNum) {
+    // FALTAN TROMPETAS
+    potValue = "analog pin: " + ofToString(pinNum) + " = " + ofToString(ard.getAnalog(pinNum));
+}
+
+//------------ arduino --------------
 
 //--------------------------------------------------------------
 void ofApp::draw(){
@@ -124,6 +223,21 @@ void ofApp::draw(){
     ofSetColor(0);
     ofDrawBitmapString(ofToString((int)ofGetFrameRate()) + " FPS", 20,20);
   }
+
+    // ARDUINO
+    ofSetColor(0);
+    if (!bSetupArduino){
+        //SI ARDUINO NO ESTÁ READY
+      ofDrawBitmapString("arduino not ready...\n", 515, 40);
+    } else {
+       //ofDrawBitmapString(potValue + "\n" + buttonState, 515, 40);
+        
+        //ofDrawBitmapString(buttonState, 515, 40);
+        
+        
+        
+        
+    }
 }
 
 //--------------------------------------------------------------
