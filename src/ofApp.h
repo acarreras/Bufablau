@@ -57,10 +57,10 @@ public:
   Visual  visual;
 
     
-  // SERIAL - ARDUINO
+  // ARDUINO
 
     ofArduino    ard;
-    bool        bSetupArduino;            // flag variable for setting up arduino once
+    bool        bSetupArduino;           
     
 private:
     
