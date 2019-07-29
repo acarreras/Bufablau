@@ -82,7 +82,7 @@ void ofApp::setup(){
     buttonState = "digital pin:";
     potValue = "analog pin:";
 
-    ard.connect("/dev/cu.usbmodem162", 57600);
+    ard.connect("/dev/cu.usbmodem171", 57600);
 
     ofAddListener(ard.EInitialized, this, &ofApp::setupArduino);
     bSetupArduino    = false;
@@ -130,7 +130,8 @@ void ofApp::setupArduino(const int & version) {
     // set pins D2 and A5 to digital input
     ard.sendDigitalPinMode(17, ARD_INPUT);
     ard.sendDigitalPinMode(15, ARD_INPUT);
-    ard.sendDigitalPinMode(19, ARD_INPUT);  // pin 21 if using StandardFirmata from Arduino 0022 or older
+    ard.sendDigitalPinMode(19, ARD_INPUT);
+    ard.sendDigitalPinMode(3, ARD_INPUT);
     
     // set pin A0 to analog input
     ard.sendAnalogPinReporting(0, ARD_ANALOG);
@@ -181,6 +182,14 @@ void ofApp::digitalPinChanged(const int & pinNum) {
             botones[2] = false;
             visual.buttonReset(2);
         }
+    }else if(pinNum==3){
+        if(ard.getDigital(pinNum)==1){
+            botones[3] = true;
+            visual.buttonBang(3);
+        }else{
+            botones[3] = false;
+            visual.buttonReset(3);
+        }
         
     }
 }
@@ -191,6 +200,20 @@ void ofApp::digitalPinChanged(const int & pinNum) {
 void ofApp::analogPinChanged(const int & pinNum) {
     // FALTAN TROMPETAS
     potValue = "analog pin: " + ofToString(pinNum) + " = " + ofToString(ard.getAnalog(pinNum));
+    
+    if(pinNum==0){
+        
+        if(ard.getDigital(pinNum)==1){
+            botones[0] = true;
+            visual.buttonBang(0);
+        }else{
+            botones[0] = false;
+            visual.buttonReset(0);
+        }
+        
+        
+        
+    }
 }
 
 //------------ arduino --------------
@@ -230,12 +253,9 @@ void ofApp::draw(){
         //SI ARDUINO NO ESTÁ READY
       ofDrawBitmapString("arduino not ready...\n", 515, 40);
     } else {
-       //ofDrawBitmapString(potValue + "\n" + buttonState, 515, 40);
+      // ofDrawBitmapString(potValue + "\n" + buttonState, 515, 40);
         
-        //ofDrawBitmapString(buttonState, 515, 40);
-        
-        
-        
+        ofDrawBitmapString(potValue, 515, 40);
         
     }
 }
