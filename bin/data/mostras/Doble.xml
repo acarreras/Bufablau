@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Doble>
-	<Valor>1</Valor>
+	<Valor>0.242891</Valor>
 	<Oscilador>
 		<Time_Mul>1.32653</Time_Mul>
 		<Y_Offset>61.5306</Y_Offset>

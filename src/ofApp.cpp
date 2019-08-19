@@ -82,10 +82,28 @@ void ofApp::setup(){
     buttonState = "digital pin:";
     potValue = "analog pin:";
 
-    ard.connect("/dev/cu.usbmodem171", 57600);
+    ard.connect("/dev/cu.usbmodem1411", 57600);
 
     ofAddListener(ard.EInitialized, this, &ofApp::setupArduino);
     bSetupArduino    = false;
+    
+    //arduino gui
+    trompetas_gui.setup(); // most of the time you don't need a name
+    trompetas_gui.add(trompeta_1_val.setup("trompeta 1", 1, 0, 5));
+    trompetas_gui.add(trompeta_2_val.setup("trompeta 2", 1, 0, 5));
+    trompetas_gui.add(trompeta_3_val.setup("trompeta 3", 1, 0, 5));
+    trompetas_gui.add(trompeta_4_val.setup("trompeta 4", 1, 0, 5));
+    trompetas_gui.add(trompeta_5_val.setup("trompeta 5", 1, 0, 5));
+    trompetas_gui.add(trompeta_6_val.setup("trompeta 6", 1, 0, 5));
+        showGui = false;
+    
+    //SOUND
+    bicho_1.load("sound/bicho_1.wav");
+    bicho_2.load("sound/bicho_2.wav");
+    bicho_3.load("sound/bicho_3.wav");
+    bicho_4.load("sound/bicho_4.wav");
+    bicho_5.load("sound/bicho_5.wav");
+    bicho_6.load("sound/bicho_6.wav");
 }
 
 //--------------------------------------------------------------
@@ -94,12 +112,12 @@ void ofApp::update(){
   mesh_->update();
 
   // FULLES
-  t = ofGetElapsedTimef();
+  t = ofGetElapsedTimef()/5;
 
   // TROMPETAS
   //  enviar data , el toggle de simulacion tiene que estar apagado
   for(int i=0; i<TOTALT; i++){
-    trompetas[i] = ofNoise(i, ofGetElapsedTimef());
+   // trompetas[i] = ofNoise(i, ofGetElapsedTimef());
   }
   for(int i=0; i<TOTALT; i++){
     visual.setVal(i,trompetas[i]);
@@ -135,6 +153,12 @@ void ofApp::setupArduino(const int & version) {
     
     // set pin A0 to analog input
     ard.sendAnalogPinReporting(0, ARD_ANALOG);
+    ard.sendAnalogPinReporting(1, ARD_ANALOG);
+    ard.sendAnalogPinReporting(2, ARD_ANALOG);
+    ard.sendAnalogPinReporting(3, ARD_ANALOG);
+    ard.sendAnalogPinReporting(4, ARD_ANALOG);
+    ard.sendAnalogPinReporting(5, ARD_ANALOG);
+
     
     
     // Listen for changes on the digital and analog pins
@@ -149,6 +173,8 @@ void ofApp::updateArduino(){
 
     
 }
+
+
 
 //--------------------------------------------------------------
 void ofApp::digitalPinChanged(const int & pinNum) {
@@ -201,19 +227,50 @@ void ofApp::analogPinChanged(const int & pinNum) {
     // FALTAN TROMPETAS
     potValue = "analog pin: " + ofToString(pinNum) + " = " + ofToString(ard.getAnalog(pinNum));
     
-    if(pinNum==0){
-        
-        if(ard.getDigital(pinNum)==1){
-            botones[0] = true;
-            visual.buttonBang(0);
-        }else{
-            botones[0] = false;
-            visual.buttonReset(0);
+    
+    for(int i=0;i<6;i++){
+        if(pinNum==i){
+            trompetas[i] = ofMap(ard.getAnalog(pinNum),0,3,0,1); 
         }
-        
-        
-        
     }
+    
+    switch(pinNum){
+        case 0:
+            if(!bicho_1.isPlaying()){
+                bicho_1.play();
+            }
+            break;
+        case 1:
+            if(!bicho_2.isPlaying()){
+                bicho_2.play();
+            }
+            break;
+        case 2:
+            if(!bicho_3.isPlaying()){
+                bicho_3.play();
+            }
+            break;
+        case 3:
+            if(!bicho_4.isPlaying()){
+                bicho_4.play();
+            }
+            break;
+        case 4:
+            if(!bicho_5.isPlaying()){
+                bicho_5.play();
+            }
+            break;
+        case 5:
+            if(!bicho_6.isPlaying()){
+                bicho_6.play();
+            }
+            break;
+    }
+    
+    
+        
+        
+    
 }
 
 //------------ arduino --------------
@@ -255,8 +312,13 @@ void ofApp::draw(){
     } else {
       // ofDrawBitmapString(potValue + "\n" + buttonState, 515, 40);
         
-        ofDrawBitmapString(potValue, 515, 40);
+        ofDrawBitmapString(potValue+" "+ofToString(trompetas[2]), 515, 40);
         
+    }
+    
+    
+    if(showGui){
+        trompetas_gui.draw();
     }
 }
 
@@ -345,6 +407,13 @@ void ofApp::keyReleased(int key){
       visual.buttonReset(3);
     }
   } // end if brunMode
+    
+    if(key == 't'){
+        showGui = !showGui;
+    }
+    if(key == 'm'){
+    trompetas_gui.saveToFile("trompetas.xml");
+    }
 }
 
 //--------------------------------------------------------------
