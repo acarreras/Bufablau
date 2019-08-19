@@ -73,7 +73,8 @@ Project{
 
         of.addons: [
             'ofxGui',
-            'ofxXmlSettings'
+            'ofxXmlSettings',
+            'ofxMeshWarp',
         ]
 
         // additional flags for the project. the of module sets some
