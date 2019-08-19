@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <Stick>
-	<Valor>1</Valor>
+	<Valor>0.35</Valor>
 	<Oscilador>
-		<Time_Mul>2.04082</Time_Mul>
+		<Time_Mul>1.22449</Time_Mul>
 		<Y_Offset>116.131</Y_Offset>
 		<Radius>174.816, 153.411</Radius>
 		<Freq>1, 1</Freq>
 	</Oscilador>
 	<Tint>0.821918, 0.193621, 0.573257, 1</Tint>
-	<P_Threshold>0.675</P_Threshold>
+	<P_Threshold>0.755234</P_Threshold>
 </Stick>

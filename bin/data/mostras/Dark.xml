@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Dark>
-	<Valor>1</Valor>
+	<Valor>0.316484</Valor>
 	<Oscilador>
 		<Time_Mul>2.44898</Time_Mul>
 		<Y_Offset>0</Y_Offset>
@@ -8,5 +8,5 @@
 		<Freq>1, 3.02374</Freq>
 	</Oscilador>
 	<Tint>0.131577, 0.159172, 0.547945, 1</Tint>
-	<P_Threshold>0.5</P_Threshold>
+	<P_Threshold>0.711484</P_Threshold>
 </Dark>

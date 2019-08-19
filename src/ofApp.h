@@ -5,6 +5,7 @@
 #include "ofxMeshWarp.h"
 #include "ofxMeshWarpManagedController.h"
 #include "Visual.hpp"
+#include "ofxGui.h"
 
 
 #define TOTALB      4 // numero total de botones
@@ -29,6 +30,7 @@ public:
   void windowResized(int w, int h);
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
+    
 
   // APP
   bool brunMode = false;
@@ -60,7 +62,15 @@ public:
   // ARDUINO
 
     ofArduino    ard;
-    bool        bSetupArduino;           
+    bool        bSetupArduino;
+    ofxPanel trompetas_gui;
+    ofxIntSlider trompeta_1_val;
+    ofxIntSlider trompeta_2_val;
+    ofxIntSlider trompeta_3_val;
+    ofxIntSlider trompeta_4_val;
+    ofxIntSlider trompeta_5_val;
+    ofxIntSlider trompeta_6_val;
+        bool showGui;
     
 private:
     
@@ -68,9 +78,18 @@ private:
     void digitalPinChanged(const int & pinNum);
     void analogPinChanged(const int & pinNum);
     void updateArduino();
-    
+
     string buttonState;
     string potValue;
+    
+    // SONIDO
+    
+    ofSoundPlayer bicho_1;
+    ofSoundPlayer bicho_2;
+    ofSoundPlayer bicho_3;
+    ofSoundPlayer bicho_4;
+    ofSoundPlayer bicho_5;
+    ofSoundPlayer bicho_6;
   
 
 };
