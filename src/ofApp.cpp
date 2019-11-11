@@ -23,6 +23,22 @@ void ofApp::setup(){
       //ofLogToFile("logs/DEBUG" + ofGetTimestampString() + ".txt", true);
   }
 
+  // SETTINGS
+    if(!xml.load("bufa.xml")){
+      ofLogError() << "Couldn't load XML settings file bufa.xml";
+      portArduino = "/dev/ttyACM1";
+    }
+    else{
+      auto arduino = xml.findFirst("//arduino");
+      portArduino = arduino.getAttribute("port").getValue();
+      cout << "******************************************" << endl;
+      cout << "* xml settings ***************************" << endl;
+      cout << "portArduino: " << portArduino << endl;
+      cout << "******************************************" << endl;
+      cout << "******************************************" << endl;
+
+    }
+
   // BOTONES PULSADORES
   for(int i=0; i<TOTALB; i++){
     botones[i] = false;
@@ -34,11 +50,11 @@ void ofApp::setup(){
   
   //  VISUAL
   //  posibles colores de fondo
-  visual.addBackColor(0xBCC4DB);
-  visual.addBackColor(0xC0A9B0);
-  visual.addBackColor(0x7880B5);
-  visual.addBackColor(0x6987C9);
-  visual.addBackColor(0x6BBAEC);
+  visual.addBackColor(0x43B94C);//(0xBCC4DB); // verd
+  visual.addBackColor(0xF76191);//(0xC0A9B0); // rosa
+  visual.addBackColor(0xED701D);//(0x7880B5); // tarnja
+  visual.addBackColor(0xFAD61E);//(0x6987C9); // groc
+  visual.addBackColor(0x0C85CE);//(0x6BBAEC); // blau
   
   
   visual.setup();
@@ -82,7 +98,7 @@ void ofApp::setup(){
     buttonState = "digital pin:";
     potValue = "analog pin:";
 
-    ard.connect("/dev/cu.usbmodem1411", 57600);
+    ard.connect(portArduino, 57600);
 
     ofAddListener(ard.EInitialized, this, &ofApp::setupArduino);
     bSetupArduino    = false;
@@ -95,7 +111,8 @@ void ofApp::setup(){
     trompetas_gui.add(trompeta_4_val.setup("trompeta 4", 1, 0, 5));
     trompetas_gui.add(trompeta_5_val.setup("trompeta 5", 1, 0, 5));
     trompetas_gui.add(trompeta_6_val.setup("trompeta 6", 1, 0, 5));
-        showGui = false;
+    showGui = false;
+    trompetas_gui.loadFromFile("trompetas.xml");
     
     //SOUND
     bicho_1.load("sound/bicho_1.wav");
@@ -230,7 +247,26 @@ void ofApp::analogPinChanged(const int & pinNum) {
     
     for(int i=0;i<6;i++){
         if(pinNum==i){
-            trompetas[i] = ofMap(ard.getAnalog(pinNum),0,3,0,1); 
+            int valor = 0;
+            if(i == 0){
+              valor = trompeta_1_val;
+            }
+            else if(i == 1){
+              valor = trompeta_2_val;
+            }
+            else if(i == 2){
+              valor = trompeta_3_val;
+            }
+            else if(i == 3){
+              valor = trompeta_4_val;
+            }
+            if(i == 4){
+              valor = trompeta_5_val;
+            }
+            else if(i == 5){
+              valor = trompeta_6_val;
+            }
+            trompetas[i] = ofMap(ard.getAnalog(pinNum),0,valor,0,1);
         }
     }
     
@@ -299,12 +335,13 @@ void ofApp::draw(){
   if(bcontrolerDraw) controller_.draw();
 
   // DEBUG
-  if(!brunMode){
+  if(visual.drawGui){
     ofSetColor(0);
     ofDrawBitmapString(ofToString((int)ofGetFrameRate()) + " FPS", 20,20);
   }
 
     // ARDUINO
+  if(visual.drawGui){
     ofSetColor(0);
     if (!bSetupArduino){
         //SI ARDUINO NO ESTÁ READY
@@ -315,6 +352,7 @@ void ofApp::draw(){
         ofDrawBitmapString(potValue+" "+ofToString(trompetas[2]), 515, 40);
         
     }
+  }
     
     
     if(showGui){

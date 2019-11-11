@@ -63,6 +63,7 @@ private:
     ofShader    shader;
     vector<ofFloatColor>    backgroundColors;
     ofFloatColor    backColor;
+    int next = 0;
     int     colorIndex;
     int     colorNextIndex;
     

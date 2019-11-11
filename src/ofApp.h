@@ -37,6 +37,9 @@ public:
   float appW;
   float appH;
 
+  // SETTINGS
+  ofXml xml;
+
   // WARP
   bool bcontrolerDraw = false;
   std::shared_ptr<ofxMeshWarp> mesh_;
@@ -60,7 +63,7 @@ public:
 
     
   // ARDUINO
-
+    string portArduino;
     ofArduino    ard;
     bool        bSetupArduino;
     ofxPanel trompetas_gui;

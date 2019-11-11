@@ -268,9 +268,13 @@ void    Visual::buttonBang(int _index)
     if(_index == 0)
     {
        
-        int next = (int)ofRandom(backgroundColors.size());
-        while(next == colorIndex)
-            next = (int)ofRandom(backgroundColors.size());
+        //int next = (int)ofRandom(backgroundColors.size());
+        //while(next == colorIndex)
+        //    next = (int)ofRandom(backgroundColors.size());
+        next++;
+        if(next >= backgroundColors.size()){
+          next = 0;
+        }
         colorIndex = colorNextIndex;
         backColor = backColor.getLerped(backgroundColors.at(colorNextIndex),get_interpolator("Fondo").val());
         

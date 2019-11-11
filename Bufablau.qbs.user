@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.7.0, 2019-07-19T12:23:16. -->
+<!-- Written by QtCreator 4.7.0, 2019-11-11T19:45:57. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -226,7 +226,7 @@
     <value type="QString" key="Qbs.RunConfiguration.CommandLineArguments"></value>
     <value type="bool" key="Qbs.RunConfiguration.UsingLibraryPaths">true</value>
     <value type="QString" key="Qbs.RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="Qbs.RunConfiguration.WorkingDirectory.default">/home/anna/Dropbox/_Anna/OF/of_v0.10.1_linux64gcc5_release/apps/myApps/Bufablau/bin</value>
+    <value type="QString" key="Qbs.RunConfiguration.WorkingDirectory.default">/home/anna/Dropbox/_Anna/OF/of_v0.10.1_linux64gcc5_release/apps/limaApps/Bufablau/bin</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
